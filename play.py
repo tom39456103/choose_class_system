@@ -1,8 +1,10 @@
 import pygame
 from pygame import draw
-from math import cos, sin, radians
+from math import cos, sin, radians, pi
+import tkinter
 
 def piechart(origin: tuple, radius, percentage: list):
+    colors = [RED, ORANGE, GREEN, BLUE]  # 每個部分的顏色
     start_angle = -90
     length = len(percentage)
     vertex = []
@@ -12,9 +14,12 @@ def piechart(origin: tuple, radius, percentage: list):
         for i in range(round(percentage[j] * 360.0 / 100)):
             vertex[j].append((origin[0] + radius * cos(radians(start_angle + i)),
                               origin[1] + radius * sin(radians(start_angle + i))))
-        vertex[j].append(origin)
-        draw.polygon(screen, colors[j], vertex[j])
+            vertex[j].append(origin)
+        draw.polygon(screen, colors[j], vertex[j], width=3)
         start_angle += round(percentage[j] * 360.0 / 100)
+    draw.circle(screen, WHITE, origin, radius-6)
+
+        
 
 # # 從文件中讀取課程數據列表
 # def load_course_data(filename):
@@ -31,16 +36,17 @@ pygame.init()
 
 # 設置視窗大小和標題
 WINDOW_SIZE = (800, 600)
-screen = pygame.display.set_mode(WINDOW_SIZE)
+screen = pygame.display.set_mode(WINDOW_SIZE, pygame.RESIZABLE)
 pygame.display.set_caption("課程信息")
 
 # 設置顏色
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
-BLACK = (0, 0, 0)
+RED = (255, 80, 80)
+ORANGE = (239, 134, 0)
+GREEN = (102, 153, 0)
+BLUE = (51, 102, 204)
+BLACK = (10, 10, 10)
 CLAY = (128,128,128)
 DARKCLAY = (200,200,200)
 
@@ -48,9 +54,6 @@ DARKCLAY = (200,200,200)
 font = pygame.font.SysFont("font.ttf", 24)
 # 數據 - 用於繪製圓餅圖
 data = [30, 20, 25, 25]  # 例如，這裡表示四個部分，佔比分別為 30%，20%，25%，25%
-total = sum(data)
-start_angle = 0
-angles = [360 * value / total for value in data]
 
 # 主循環
 running = True
@@ -67,8 +70,6 @@ while running:
     # #1 在畫面中上圓餅圖呈現
     radius = 100
     center = (WINDOW_SIZE[0] // 2, WINDOW_SIZE[1] // 4)
-    colors = [RED, GREEN, BLUE, BLACK]  # 每個部分的顏色
-
     piechart(center, radius, data)
 
     # #2 在右上角長方形呈現
