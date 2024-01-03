@@ -90,6 +90,9 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.VIDEORESIZE:
+            WINDOW_SIZE = (event.w,event.h)
+            window = pygame.display.set_mode(WINDOW_SIZE, pygame.RESIZABLE)
 
     pygame.display.flip()
 
