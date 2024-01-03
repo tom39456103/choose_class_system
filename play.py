@@ -1,14 +1,15 @@
 import pygame
 import math
 
-# 從文件中讀取課程數據列表
-def load_course_data(filename):
-    with open(filename, 'r', encoding='utf-8') as file:
-        courses = [line.strip() for line in file]
-    return courses
+# # 從文件中讀取課程數據列表
+# def load_course_data(filename):
+#     with open(filename, 'r', encoding='utf-8') as file:
+#         courses = [line.strip() for line in file]
+#     return courses
 
-# 從文件中加載課程數據列表
-course_data = load_course_data('courses.txt')
+# # 從文件中加載課程數據列表
+# course_data = load_course_data('courses.txt')
+course_data = ['1', '2', '3', '4']
 
 # 初始化 Pygame
 pygame.init()
@@ -45,7 +46,11 @@ while running:
         course_text = font.render(course, True, BLACK)
         screen.blit(course_text, (50, y))
         y += 40
-    running = True
+    #running = True
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
 while running:
     screen.fill(WHITE)
 
