@@ -1,5 +1,18 @@
 import pygame
-import math
+from pygame import draw
+from math import cos, sin, radians
+def piechart(origin: tuple, radius, percentage: list):
+    start_angle = -90
+    length = len(percentage)
+    vertex = []
+    for i in range(length):
+        vertex.append([])
+    for j in range(length):
+        for i in range(round(percentage[j] * 360.0 / 100)):
+            vertex[j].append((origin[0] + radius * cos(radians(start_angle + i)),
+                              origin[1] + radius * sin(radians(start_angle + i))))
+        start_angle += percentage[j]
+        vertex.append(origin)
 
 # # 從文件中讀取課程數據列表
 # def load_course_data(filename):
@@ -48,37 +61,25 @@ while running:
         course_text = font.render(course, True, BLACK)
         screen.blit(course_text, (50, y))
         y += 40
-    #running = True
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-while running:
-    screen.fill(WHITE)
 
     # #1 在畫面中上圓餅圖呈現
     radius = 100
     center = (WINDOW_SIZE[0] // 2, WINDOW_SIZE[1] // 4)
     colors = [RED, GREEN, BLUE, BLACK]  # 每個部分的顏色
 
-    for i, angle in enumerate(angles):
-        pygame.draw.polygon(screen, colors[i], [center, (center[0] + radius * math.cos(math.radians(start_angle)),
-                                                     center[1] + radius * math.sin(math.radians(start_angle))),
-                                                (center[0] + radius * math.cos(math.radians(start_angle + angle)),
-                                                 center[1] + radius * math.sin(math.radians(start_angle + angle)))])
-        start_angle += angle
+    piechart(center, radius, data)
 
     # #2 在右上角長方形呈現
     rect1 = pygame.Rect(600, 50, 100, 200)
-    pygame.draw.rect(screen, RED, rect1)
+    draw.rect(screen, RED, rect1)
 
     # #3 在右下角長方形呈現
     rect2 = pygame.Rect(600, 400, 150, 50)
-    pygame.draw.rect(screen, BLUE, rect2)
+    draw.rect(screen, BLUE, rect2)
 
     # #4 在左邊長方形呈現
     rect3 = pygame.Rect(50, 200, 200, 100)
-    pygame.draw.rect(screen, GREEN, rect3)
+    draw.rect(screen, GREEN, rect3)
 
     # 更新顯示
     pygame.display.flip()
@@ -91,3 +92,4 @@ while running:
 
 # 退出 Pygame
 pygame.quit()
+
