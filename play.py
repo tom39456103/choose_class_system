@@ -1,6 +1,7 @@
 import pygame
 from pygame import draw
 from math import cos, sin, radians
+
 def piechart(origin: tuple, radius, percentage: list):
     start_angle = -90
     length = len(percentage)
@@ -11,8 +12,9 @@ def piechart(origin: tuple, radius, percentage: list):
         for i in range(round(percentage[j] * 360.0 / 100)):
             vertex[j].append((origin[0] + radius * cos(radians(start_angle + i)),
                               origin[1] + radius * sin(radians(start_angle + i))))
-        start_angle += percentage[j]
-        vertex.append(origin)
+        vertex[j].append(origin)
+        draw.polygon(screen, colors[j], vertex[j])
+        start_angle += round(percentage[j] * 360.0 / 100)
 
 # # 從文件中讀取課程數據列表
 # def load_course_data(filename):
