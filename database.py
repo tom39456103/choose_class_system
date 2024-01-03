@@ -26,11 +26,16 @@ def insert_file(file, table):
     cursor = conn.cursor()
 
     for objects in data:
-        name = objects['name']
-        price = objects['price']
+        Code = objects['Code']
+        Category = objects['Category']
+        Name = objects['Name']
+        Credit = objects['Credit']
+        Campus = objects['Campus']
+        Instructor = objects['Instructor']
+        val = (Code, Category, Name, Credit, Campus, Instructor)
 
         # insert data
-        cursor.execute("INSERT INTO %s (name, price) VALUES (%s, %s)" % (table, name, price))
+        cursor.execute("INSERT INTO %s VALUES %s" % (table, val))
 
     # save
     conn.commit()
@@ -52,7 +57,7 @@ def fetch_data(cols, table, cond):
     conn = sqlite3.connect('CCSdatabase.db')
     cursor = conn.cursor()
 
-    cursor.execute("SELECT %s FROM %s WHERE %s" % (cols, table, cond))
+    cursor.execute("SELECT %s FROM %s %s" % (cols, table, cond))
     rows = cursor.fetchall()
     
     conn.close()
@@ -61,3 +66,13 @@ def fetch_data(cols, table, cond):
 
 def drop_database():
     os.remove('CCSdatabase.db')
+
+def drop_table(table):
+    conn = sqlite3.connect('CCSdatabase.db')
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM sqlite_sequence WHERE name = '%s'" % (table))
+    cursor.execute("VACUUM")
+    
+    conn.commit()
+    conn.close()
