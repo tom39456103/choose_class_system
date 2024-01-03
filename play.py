@@ -26,6 +26,8 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 BLACK = (0, 0, 0)
+CLAY = (128,128,128)
+DARKCLAY = (200,200,200)
 
 # 加載字體
 font = pygame.font.SysFont("font.ttf", 24)
