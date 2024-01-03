@@ -25,6 +25,8 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 BLACK = (0, 0, 0)
+CLAY = (128,128,128)
+DARKCLAY = (200,200,200)
 
 # 加載字體
 font = pygame.font.SysFont("font.ttf", 24)
@@ -45,9 +47,6 @@ while running:
         course_text = font.render(course, True, BLACK)
         screen.blit(course_text, (50, y))
         y += 40
-    running = True
-while running:
-    screen.fill(WHITE)
 
     # #1 在畫面中上圓餅圖呈現
     radius = 100
