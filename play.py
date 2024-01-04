@@ -36,12 +36,12 @@ running = True
 while running:
     screen.fill(WHITE)
 
-    # 顯示課程信息
-    y = 50
-    for course in course_data:
-        course_text = font.render(course, True, BLACK)
-        screen.blit(course_text, (50, y))
-        y += 40
+    # # 顯示課程信息
+    # y = 50
+    # for course in course_data:
+    #     course_text = font.render(course, True, BLACK)
+    #     screen.blit(course_text, (50, y))
+    #     y += 40
 
     # #1 在畫面中上圓餅圖呈現
     radius = min(grid1.h, grid1.w) * 2
@@ -64,13 +64,18 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.VIDEORESIZE:
-            WINDOW_SIZE = (event.w,event.h)
-            window = pygame.display.set_mode(WINDOW_SIZE, pygame.RESIZABLE)
+            # 螢幕大小變動
+            # 重設視窗大小
+            WINDOW_SIZE = (event.w, event.h)
+            screen = pygame.display.set_mode(WINDOW_SIZE, pygame.RESIZABLE)
+            # 更新網格與表格
             grid1.update(((0, 0), WINDOW_SIZE))
             table2.update()
             table3.update()
             table4.update()
         elif event.type == pygame.MOUSEBUTTONDOWN:
+            # 滑鼠有動作
+            # 滑鼠滾輪，操控表格上下
             table2.mouse_scroll(pygame.mouse.get_pos(), event.button)
             table3.mouse_scroll(pygame.mouse.get_pos(), event.button)
             table4.mouse_scroll(pygame.mouse.get_pos(), event.button)

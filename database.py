@@ -26,13 +26,15 @@ def insert_file(file, table):
     cursor = conn.cursor()
 
     for objects in data:
-        Code = objects['Code']
-        Category = objects['Category']
-        Name = objects['Name']
-        Credit = objects['Credit']
-        Campus = objects['Campus']
-        Instructor = objects['Instructor']
-        val = (Code, Category, Name, Credit, Campus, Instructor)
+        Code = objects['Code']              # 課號
+        Category = objects['Category']      # 類別
+        Name = objects['Name']              # 課名
+        Credit = objects['Credit']          # 學分
+        Campus = objects['Campus']          # 校區
+        Instructor = objects['Instructor']  # 老師
+        Time = objects['Time']              # 時間
+        Room = objects['Room']              # 教室
+        val = (Code, Category, Name, Credit, Campus, Instructor, Time, Room)
 
         # insert data
         cursor.execute("INSERT INTO %s VALUES %s" % (table, val))
