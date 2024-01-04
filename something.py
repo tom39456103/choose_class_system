@@ -3,17 +3,16 @@ from math import cos, sin, radians, pi
 
 # 設置顏色
 WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
 BLACK = (10, 10, 10)
 CLAY = (128,128,128)
 DARKCLAY = (200,200,200)
-RED = (255, 80, 80)
+RED = [(255, 80, 80), (204, 0, 0), (255, 124, 128), (255, 204, 204)]
 ORANGE = (239, 134, 0)
 GREEN = (102, 153, 0)
 BLUE = (51, 102, 204)
 
 def piechart(screen, origin: tuple, radius, percentage: list):
-    colors = [RED, ORANGE, GREEN, BLUE]  # 每個部分的顏色
+    colors = [RED[0], ORANGE, GREEN, BLUE]  # 每個部分的顏色
     start_angle = -90
     length = len(percentage)
     vertex = []
@@ -29,7 +28,7 @@ def piechart(screen, origin: tuple, radius, percentage: list):
     draw.circle(screen, WHITE, origin, radius-6)
 
 class grid():
-    def __init__(self, rect: tuple[tuple, tuple], col, row) -> None:
+    def __init__(self, rect: tuple[tuple, tuple], col, row):
         self.grid = self.gen_grid(rect, col, row)
         self.col = col
         self.row = row
@@ -39,18 +38,44 @@ class grid():
 
     def gen_grid(self, rect: tuple[tuple, tuple], col, row):
         r = []
-        for i in range(col):
+        for i in range(col+1):
             r.append([])
-            for j in range(row):
+            for j in range(row+1):
                 r[i].append((rect[0][0] + rect[1][0] * i / col,
                              rect[0][1] + rect[1][1] * j / row))
         return r
     
     def rect(self, rect: tuple[tuple, tuple]):
-        return self.grid[rect[0][0]][rect[0][1]][0], self.grid[rect[0][0]][rect[0][1]][1], rect[1][0] * self.w, rect[1][1] * self.h
+        return (self.grid[rect[0][0]][rect[0][1]], (rect[1][0] * self.w, rect[1][1] * self.h))
     
     def update(self, rect):
         self.grid = self.gen_grid(rect, self.col, self.row)
         self.w = rect[1][0] / self.col
         self.h = rect[1][1] / self.row
         self.mid = (rect[1][0] / 2, rect[1][1] / 2)
+
+class table():
+    def __init__(self, data: list, colorset, p_grid: grid, rect):
+        self.data = data
+        self.colorset = colorset
+        self.p_grid = p_grid
+        self.rect = rect
+        self.row = rect[1][1]
+        self.grid = grid(p_grid.rect(rect), len(data[0]), self.row)
+
+    def draw(self, screen):
+        draw.rect(screen, self.colorset[2], 
+                  self.p_grid.rect(self.rect), 
+                  0, round(self.p_grid.h / 2))
+        draw.line(screen, self.colorset[1], 
+                  self.grid.grid[0][1], 
+                  self.grid.grid[self.grid.col][1])
+        for i in range(2, self.row):
+            draw.line(screen, self.colorset[3], 
+                      self.grid.grid[0][i], 
+                      self.grid.grid[self.grid.col][i])
+    
+    def update(self):
+        self.grid.update(self.p_grid.rect(self.rect))
+        
+

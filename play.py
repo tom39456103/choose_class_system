@@ -26,6 +26,8 @@ font = pygame.font.SysFont("font.ttf", 24)
 # 數據 - 用於繪製圓餅圖
 data = [30, 20, 25, 25]  # 例如，這裡表示四個部分，佔比分別為 30%，20%，25%，25%
 
+table2 = table([[1, 2, 3, 4], 2, 3, 4], RED, grid1, ((13, 1), (6, 4)))
+
 # 主循環
 running = True
 while running:
@@ -39,13 +41,12 @@ while running:
         y += 40
 
     # #1 在畫面中上圓餅圖呈現
-    radius = grid1.h * 2
+    radius = min(grid1.h, grid1.w) * 2
     center = grid1.grid[10][3]
     piechart(screen, center, radius, data)
 
     # #2 在右上角長方形呈現
-    rect1 = pygame.Rect(grid1.rect(((13, 1), (6, 4))))
-    draw.rect(screen, RED, rect1)
+    table2.draw(screen)
 
     # #3 在右下角長方形呈現
     rect2 = pygame.Rect(grid1.rect(((8, 6), (11, 5))))
@@ -65,6 +66,7 @@ while running:
             WINDOW_SIZE = (event.w,event.h)
             window = pygame.display.set_mode(WINDOW_SIZE, pygame.RESIZABLE)
             grid1.update(((0, 0), WINDOW_SIZE))
+            table2.update()
 
     pygame.display.flip()
 
