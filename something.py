@@ -4,13 +4,13 @@ from math import cos, sin, radians, pi
 # 設置顏色
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+BLACK = (10, 10, 10)
+CLAY = (128,128,128)
+DARKCLAY = (200,200,200)
 RED = (255, 80, 80)
 ORANGE = (239, 134, 0)
 GREEN = (102, 153, 0)
 BLUE = (51, 102, 204)
-BLACK = (10, 10, 10)
-CLAY = (128,128,128)
-DARKCLAY = (200,200,200)
 
 def piechart(screen, origin: tuple, radius, percentage: list):
     colors = [RED, ORANGE, GREEN, BLUE]  # 每個部分的顏色
@@ -45,6 +45,10 @@ class grid():
                 r[i].append((rect[0][0] + rect[1][0] * i / col,
                              rect[0][1] + rect[1][1] * j / row))
         return r
+    
+    def rect(self, rect: tuple[tuple, tuple]):
+        return (self.grid[rect[0][0]][rect[0][1]],
+                (rect[1][0] * self.w, rect[1][1] * self.h))
     
     def update(self, rect):
         self.grid = self.gen_grid(rect, self.col, self.row)
