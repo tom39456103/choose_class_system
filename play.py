@@ -39,20 +39,20 @@ while running:
         y += 40
 
     # #1 在畫面中上圓餅圖呈現
-    radius = 100
-    center = (WINDOW_SIZE[0] // 2, WINDOW_SIZE[1] // 4)
+    radius = grid1.h * 2
+    center = grid1.grid[10][3]
     piechart(screen, center, radius, data)
 
     # #2 在右上角長方形呈現
-    rect1 = pygame.Rect(600, 50, 100, 200)
+    rect1 = pygame.Rect(grid1.rect(((13, 1), (6, 4))))
     draw.rect(screen, RED, rect1)
 
     # #3 在右下角長方形呈現
-    rect2 = pygame.Rect(600, 400, 150, 50)
+    rect2 = pygame.Rect(grid1.rect(((8, 6), (11, 5))))
     draw.rect(screen, BLUE, rect2)
 
     # #4 在左邊長方形呈現
-    rect3 = pygame.Rect(50, 200, 200, 100)
+    rect3 = pygame.Rect(grid1.rect(((1, 1), (6, 10))))
     draw.rect(screen, GREEN, rect3)
 
     # 更新顯示

@@ -24,7 +24,7 @@ def piechart(screen, origin: tuple, radius, percentage: list):
             vertex[j].append((origin[0] + radius * cos(radians(start_angle + i)),
                               origin[1] + radius * sin(radians(start_angle + i))))
             vertex[j].append(origin)
-        draw.polygon(screen, colors[j], vertex[j], width=3)
+        draw.polygon(screen, colors[j], vertex[j], width=8)
         start_angle += round(percentage[j] * 360.0 / 100)
     draw.circle(screen, WHITE, origin, radius-6)
 
@@ -47,8 +47,7 @@ class grid():
         return r
     
     def rect(self, rect: tuple[tuple, tuple]):
-        return (self.grid[rect[0][0]][rect[0][1]],
-                (rect[1][0] * self.w, rect[1][1] * self.h))
+        return self.grid[rect[0][0]][rect[0][1]][0], self.grid[rect[0][0]][rect[0][1]][1], rect[1][0] * self.w, rect[1][1] * self.h
     
     def update(self, rect):
         self.grid = self.gen_grid(rect, self.col, self.row)
