@@ -1,25 +1,6 @@
 import pygame
 from pygame import draw
-from math import cos, sin, radians, pi
-import tkinter
-
-def piechart(origin: tuple, radius, percentage: list):
-    colors = [RED, ORANGE, GREEN, BLUE]  # 每個部分的顏色
-    start_angle = -90
-    length = len(percentage)
-    vertex = []
-    for i in range(length):
-        vertex.append([])
-    for j in range(length):
-        for i in range(round(percentage[j] * 360.0 / 100)):
-            vertex[j].append((origin[0] + radius * cos(radians(start_angle + i)),
-                              origin[1] + radius * sin(radians(start_angle + i))))
-            vertex[j].append(origin)
-        draw.polygon(screen, colors[j], vertex[j], width=3)
-        start_angle += round(percentage[j] * 360.0 / 100)
-    draw.circle(screen, WHITE, origin, radius-6)
-
-        
+from something import *
 
 # # 從文件中讀取課程數據列表
 # def load_course_data(filename):
@@ -39,16 +20,7 @@ WINDOW_SIZE = (800, 600)
 screen = pygame.display.set_mode(WINDOW_SIZE, pygame.RESIZABLE)
 pygame.display.set_caption("課程信息")
 
-# 設置顏色
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-RED = (255, 80, 80)
-ORANGE = (239, 134, 0)
-GREEN = (102, 153, 0)
-BLUE = (51, 102, 204)
-BLACK = (10, 10, 10)
-CLAY = (128,128,128)
-DARKCLAY = (200,200,200)
+grid1 = grid(((0, 0), WINDOW_SIZE), 20, 12)
 
 # 加載字體
 font = pygame.font.SysFont("font.ttf", 24)
@@ -70,7 +42,7 @@ while running:
     # #1 在畫面中上圓餅圖呈現
     radius = 100
     center = (WINDOW_SIZE[0] // 2, WINDOW_SIZE[1] // 4)
-    piechart(center, radius, data)
+    piechart(screen, center, radius, data)
 
     # #2 在右上角長方形呈現
     rect1 = pygame.Rect(600, 50, 100, 200)
