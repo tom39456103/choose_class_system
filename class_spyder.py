@@ -152,35 +152,3 @@ def class_spyder(college_y = '112#2', dpt = '理學院', unt = '數學系', grad
 
     driver.quit()
     return rows
-
-
-# In[51]:
-
-
-class_spyder()#呼叫 無參數則預設 112#2 理學院 數學系 2
-
-
-# In[52]:
-
-
-a = class_spyder() #最後那串數字是課表用，如果有兩日則中間會隔著00，ex:星期/第一節/第二節
-print(a)
-
-
-# In[53]:
-
-
-type(a)
-
-
-# In[54]:
-
-
-class_spyder(1,1,1,99)#例外範例 錯誤會回傳0 (int)
-
-
-# In[ ]:
-
-
-
-
