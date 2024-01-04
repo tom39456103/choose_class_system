@@ -85,6 +85,7 @@ class table():
         screen.blit(self.t_screen, self.grid.grid[0][1])
 
     def in_table(self, m: tuple):
+        '''判斷滑鼠位置是否在表格中'''
         x1 = self.grid.grid[0][1][0]
         x2 = x1 + self.grid.w * self.grid.col
         y1 = self.grid.grid[0][1][1]
@@ -93,11 +94,11 @@ class table():
 
     def mouse_scroll(self, m_pos, event):
         if self.in_table(m_pos) and self.pos < 0 and event == 4:
-            self.pos += 10
+            self.pos += self.grid.h / 4
             if self.pos < -self.grid.h * (len(self.data) - self.grid.row):
                 self.pos = self.grid.h * (len(self.data) - self.grid.row)
         if self.in_table(m_pos) and self.pos > -self.grid.h * (len(self.data) - self.grid.row) and event == 5:
-            self.pos -= 10
+            self.pos -= self.grid.h / 4
             if self.pos > 0:
                 self.pos = 0
 
