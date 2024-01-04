@@ -19,7 +19,6 @@ pygame.init()
 WINDOW_SIZE = (800, 600)
 screen = pygame.display.set_mode(WINDOW_SIZE, pygame.RESIZABLE)
 pygame.display.set_caption("課程信息")
-
 grid1 = grid(((0, 0), WINDOW_SIZE), 20, 12)
 
 # 加載字體
@@ -65,6 +64,7 @@ while running:
         elif event.type == pygame.VIDEORESIZE:
             WINDOW_SIZE = (event.w,event.h)
             window = pygame.display.set_mode(WINDOW_SIZE, pygame.RESIZABLE)
+            grid1.update(((0, 0), WINDOW_SIZE))
 
     pygame.display.flip()
 
