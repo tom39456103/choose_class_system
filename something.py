@@ -6,13 +6,14 @@ WHITE = (255, 255, 255)
 BLACK = (10, 10, 10)
 CLAY = (128,128,128)
 DARKCLAY = (200,200,200)
+# 中，深，淺，更淺
 RED = [(255, 80, 80), (204, 0, 0), (255, 124, 128), (255, 204, 204)]
-ORANGE = (239, 134, 0)
-GREEN = (102, 153, 0)
-BLUE = (51, 102, 204)
+ORANGE = [(239, 134, 0), (204, 102, 0), (255, 171, 64), (255, 205,140)]
+GREEN = [(102, 153, 0), (51, 102, 0), (153, 204, 0), (219, 240, 0)]
+BLUE = [(51, 102, 204), (9, 60, 146), (66, 133, 244), (142, 182, 248)]
 
 def piechart(screen, origin: tuple, radius, percentage: list):
-    colors = [RED[0], ORANGE, GREEN, BLUE]  # 每個部分的顏色
+    colors = [RED[0], ORANGE[0], GREEN[0], BLUE[0]]  # 每個部分的顏色
     start_angle = -90
     length = len(percentage)
     vertex = []
