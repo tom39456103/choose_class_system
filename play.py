@@ -26,9 +26,9 @@ font = pygame.font.SysFont("font.ttf", 24)
 # 數據 - 用於繪製圓餅圖
 data = [30, 20, 25, 25]  # 例如，這裡表示四個部分，佔比分別為 30%，20%，25%，25%
 
-table2 = table([[1, 2, 3, 4], 2, 3, 4], RED, grid1, ((13, 1), (6, 4)))
-table3 = table([[1, 2, 3, 4], 2, 3, 4], BLUE, grid1, ((8, 6), (11, 5)))
-table4 = table([[1, 2, 3, 4], 2, 3, 4], GREEN, grid1, ((1, 1), (6, 10)))
+table2 = table([[1, 2, 3, 4], 2, 3, 4], GRAY, grid1, ((13, 1), (6, 4)))
+table3 = table([[1, 2, 3, 4], 2, 3, 4], GRAY, grid1, ((8, 6), (11, 5)))
+table4 = table([[1, 2, 3, 4], 2, 3, 4], GRAY, grid1, ((1, 1), (6, 10)))
 
 # 主循環
 running = True

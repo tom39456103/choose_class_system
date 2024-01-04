@@ -7,9 +7,10 @@ BLACK = (10, 10, 10)
 CLAY = (128,128,128)
 DARKCLAY = (200,200,200)
 # 中，深，淺，更淺
+GRAY = [(174, 188, 196), (142, 161, 172), (198, 208, 214), (228, 233, 235)]
 RED = [(255, 80, 80), (204, 0, 0), (255, 124, 128), (255, 204, 204)]
 ORANGE = [(239, 134, 0), (204, 102, 0), (255, 171, 64), (255, 205,140)]
-GREEN = [(102, 153, 0), (51, 102, 0), (153, 204, 0), (219, 240, 0)]
+GREEN = [(102, 153, 0), (51, 102, 0), (153, 204, 0), (245, 255, 141)]
 BLUE = [(51, 102, 204), (9, 60, 146), (66, 133, 244), (142, 182, 248)]
 
 def piechart(screen, origin: tuple, radius, percentage: list):
@@ -65,14 +66,15 @@ class table():
         self.grid = grid(p_grid.rect(rect), len(data[0]), self.row)
 
     def draw(self, screen):
-        draw.rect(screen, self.colorset[2], 
+        draw.rect(screen, self.colorset[0], 
                   self.p_grid.rect(self.rect), 
                   0, round(self.p_grid.h / 2))
         draw.line(screen, self.colorset[1], 
                   self.grid.grid[0][1], 
-                  self.grid.grid[self.grid.col][1])
+                  self.grid.grid[self.grid.col][1]
+                  ,2)
         for i in range(2, self.row):
-            draw.line(screen, self.colorset[3], 
+            draw.line(screen, GRAY[3], 
                       self.grid.grid[0][i], 
                       self.grid.grid[self.grid.col][i])
     
