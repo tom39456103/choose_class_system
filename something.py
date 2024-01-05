@@ -1,6 +1,6 @@
 from pygame import draw
 import pygame
-from math import cos, sin, radians, pi
+from math import cos, sin, radians, floor
 
 # 設置顏色
 WHITE = (255, 255, 255)
@@ -85,11 +85,25 @@ class table():
         self.t_screen = pygame.Surface(p_grid.rect(self.t_rect)[1])
         self.t_grid = grid(((0, 0), (self.col * self.grid.w, (len(self.data) - 1) * self.grid.h)), 
                            self.col, (len(self.data) - 1))
-        self.pos = 0
+        self.pos = 0        # 表格的位移
+        self.volacity = 0   # 表格的移動速度
         self.font = pygame.font.Font("font.ttf", round(self.t_grid.w / 10))
 
     def draw(self, screen):
         '''畫表格'''
+        # 表格的順暢滾動
+        self.pos += self.volacity
+        if self.volacity != 0:
+            self.volacity *= 0.8
+            floor(self.volacity)
+            
+        buttom = -self.grid.h * (len(self.data) - self.grid.row - 1)
+        # 表格位移如果超出界線的話
+        if self.pos < buttom:
+            self.pos = buttom
+        if self.pos > 0:
+            self.pos = 0
+        
         # 表格的底
         draw.rect(screen, self.colorset[0], 
                   self.p_grid.rect(self.rect), 
@@ -142,20 +156,12 @@ class table():
         # 當滑鼠在表格內
         if self.in_table(m_pos):
             # 滑鼠往上滾
-            # 表格在頂部時，不能往下滑
             if self.pos < 0 and event == 4:
-                self.pos += self.grid.h / 4
-                # 超出的話
-                if self.pos < buttom:
-                    self.pos = -buttom
-            
+                self.volacity += self.grid.h / 6
             # 滑鼠往下滾
-            # 表格在底部時，不能往上滑
             if self.pos > buttom and event == 5:
-                self.pos -= self.grid.h / 4
-                # 超出的話
-                if self.pos > 0:
-                    self.pos = 0
+                self.volacity -= self.grid.h / 6
+            
 
     def update(self):
         # 更新網格

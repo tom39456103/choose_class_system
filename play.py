@@ -27,8 +27,9 @@ font = pygame.font.SysFont("font.ttf", 24)
 # 數據 - 用於繪製圓餅圖
 data = [30, 20, 25, 25]  # 例如，這裡表示四個部分，佔比分別為 30%，20%，25%，25%
 
+install_data(class_spyder(), "math")
 t_data = [['課號', '類別', '課名', '學分']]
-t_data.extend(fetch_data('code, category, name, credit', 'math', ''))
+t_data.extend(fetch_data('math', 'code, category, name, credit', ''))
 table2 = table(t_data, GRAY, grid1, ((13, 1), (6, 4)))
 table3 = table(t_data, GRAY, grid1, ((8, 6), (11, 5)))
 table4 = table(t_data, GRAY, grid1, ((1, 1), (6, 10)))
@@ -37,13 +38,6 @@ table4 = table(t_data, GRAY, grid1, ((1, 1), (6, 10)))
 running = True
 while running:
     screen.fill(WHITE)
-
-    # # 顯示課程信息
-    # y = 50
-    # for course in course_data:
-    #     course_text = font.render(course, True, BLACK)
-    #     screen.blit(course_text, (50, y))
-    #     y += 40
 
     # #1 在畫面中上圓餅圖呈現
     radius = min(grid1.h, grid1.w) * 2
