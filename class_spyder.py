@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[50]:
-
-
 import requests
 from bs4 import BeautifulSoup
 
@@ -149,6 +143,27 @@ def class_spyder(college_y = '112#2', dpt = '理學院', unt = '數學系', grad
                 num8*=10
         sys[11] = int(num8/10)
         #print(sys)                                                  範例輸出
-
+#     #字典化
+#     Code = objects['Code']              
+#     Category = objects['Category']      
+#     Name = objects['Name']              
+#     Credit = objects['Credit']          
+#     Campus = objects['Campus']          
+#     Instructor = objects['Instructor']  
+#     Time = objects['Time']              
+    
+    class_dict = list()
+    i = 0
+    for sys in rows[:]:
+        class_dict.append ({
+            'Code':int(sys[0]),# 課號
+            'Category':sys[9],# 類別
+            'Name':sys[1],# 課名
+            'Credit':int(float(sys[3])),# 學分
+            'Campus':sys[7],# 校區
+            'Instructor':sys[8],# 老師/時間/教室
+            'Time':sys[11]# 時間
+        })
+        
     driver.quit()
-    return rows
+    return class_dict
