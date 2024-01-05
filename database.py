@@ -74,13 +74,13 @@ def drop_table(table_name):
 def install_data(data, table_name: str, reinstall = False):
     if reinstall:
         drop_table('math')
-    create_table(table_name, 
-                "\
-                    Code        INT   PRIMARY KEY NOT NULL,\
-                    Category    TEXT              NOT NULL,\
-                    Name        TEXT              NOT NULL,\
-                    Credit      REAL              NOT NULL,\
-                    Campus      TEXT              NOT NULL,\
-                    Instructor  TEXT              NOT NULL,\
-                    Time        INT               NOT NULL")
-    insert_file(data, table_name)
+        create_table(table_name, 
+                    "\
+                        Code        INT   PRIMARY KEY NOT NULL,\
+                        Category    TEXT              NOT NULL,\
+                        Name        TEXT              NOT NULL,\
+                        Credit      REAL              NOT NULL,\
+                        Campus      TEXT              NOT NULL,\
+                        Instructor  TEXT              NOT NULL,\
+                        Time        INT               NOT NULL")
+        insert_file(eval(data), table_name)
