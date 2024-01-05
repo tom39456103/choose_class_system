@@ -1,6 +1,7 @@
 import sqlite3
 import json
 import os
+from class_spyder import *
 
 def create_table(name, vars):
     '''在資料庫裡面建一個表'''
@@ -15,11 +16,22 @@ def create_table(name, vars):
     conn.commit()
     conn.close()
 
+create_table('math', 
+             "\
+                Code        INT PRIMARY KEY NOT NULL,\
+                Category    TEXT            NOT NULL,\
+                Name        TEXT            NOT NULL,\
+                Credit      REAL            NOT NULL,\
+                Campus      TEXT            NOT NULL,\
+                Instructor  TEXT            NOT NULL,\
+                Time        INT             NOT NULL")
+
 def insert_file(file, table):
     '''把 json 轉成 SQL'''
-    # read JSON
-    with open(file) as f:
-        data = json.load(f)
+    # # read JSON
+    # with open(file) as f:
+    #     data = json.load(f)
+    data = file
     
     # open the data base
     conn = sqlite3.connect('CCSdatabase.db')
@@ -31,10 +43,9 @@ def insert_file(file, table):
         Name = objects['Name']              # 課名
         Credit = objects['Credit']          # 學分
         Campus = objects['Campus']          # 校區
-        Instructor = objects['Instructor']  # 老師
+        Instructor = objects['Instructor']  # 老師/時間/教室
         Time = objects['Time']              # 時間
-        Room = objects['Room']              # 教室
-        val = (Code, Category, Name, Credit, Campus, Instructor, Time, Room)
+        val = (Code, Category, Name, Credit, Campus, Instructor, Time)
 
         # insert data
         cursor.execute("INSERT INTO %s VALUES %s" % (table, val))
@@ -42,6 +53,8 @@ def insert_file(file, table):
     # save
     conn.commit()
     conn.close()
+
+insert_file(class_spyder(), "math")
 
 def fetch_data(cols, table):
     '''找資料，回傳序列'''
@@ -64,7 +77,6 @@ def fetch_data(cols, table, cond):
     
     conn.close()
     return rows
-
 
 def drop_database():
     os.remove('CCSdatabase.db')

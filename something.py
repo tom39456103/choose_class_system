@@ -76,13 +76,17 @@ class table():
         self.p_grid = p_grid    # 背景的網格
         self.rect = rect        # 背景網格單位下的rect座標
         self.row = rect[1][1]   # 背景網格單位下，這個table的高度
+        self.col = len(data[0])
         # p_grid的擷取
-        self.grid = grid(p_grid.rect(rect), len(data[0]), self.row) 
+        self.grid = grid(p_grid.rect(rect), self.col, self.row) 
         # 表格顯示區的大小
         self.t_rect = ((rect[0][0], rect[0][1]+1), (rect[1][0], rect[1][1]-1))
         # 表格顯示區的畫布
         self.t_screen = pygame.Surface(p_grid.rect(self.t_rect)[1])
+        self.t_grid = grid(((0, 0), (self.col * self.grid.w, (len(self.data) - 1) * self.grid.h)), 
+                           self.col, (len(self.data) - 1))
         self.pos = 0
+        self.font = pygame.font.SysFont("font.ttf", 24)
 
     def draw(self, screen):
         '''畫表格'''
@@ -90,14 +94,28 @@ class table():
         draw.rect(screen, self.colorset[0], 
                   self.p_grid.rect(self.rect), 
                   0, round(self.p_grid.h / 2))
+        for i in range(self.col):
+            # 顯示表格首列
+            text = self.font.render(self.data[0][i], True, BLACK)
+            text_rect = text.get_rect()
+            text_rect.center = (self.grid.grid[i][0][0] + self.grid.w / 2, 
+                                self.grid.grid[i][0][1] + self.grid.h / 2)
+            screen.blit(text, text_rect)
         
         # 表格顯示區
         self.t_screen.fill(self.colorset[0])
+        for i in range(1, len(self.data)-1):
         # 畫每列的分隔線，self.pos是位移
-        for i in range(0, len(self.data)-1):
             draw.line(self.t_screen, self.colorset[3], 
                       (0, self.grid.h * i + self.pos), 
                       (self.grid.w * self.grid.col, self.grid.h * i + self.pos))
+            for j in range(len(self.data[i])):
+                # 畫文字
+                text = self.font.render(self.data[i][j], True, BLACK)
+                text_rect = text.get_rect()
+                text_rect.center = (self.t_grid.grid[j][i - 1][0] + self.t_grid.w / 2, 
+                                    self.t_grid.grid[j][i - 1][1] + self.t_grid.h / 2 + self.pos)
+                self.t_screen.blit(text, text_rect)
         # 畫首列的分隔線
         draw.line(self.t_screen, self.colorset[1], 
                   (0, 0), (self.grid.w * self.grid.col, 0), 2)
@@ -115,6 +133,7 @@ class table():
 
     def mouse_scroll(self, m_pos, event):
         '''滑鼠滾動的行為'''
+        buttom = -self.grid.h * (len(self.data) - self.grid.row - 1)
         # 當滑鼠在表格內
         if self.in_table(m_pos):
             # 滑鼠往上滾
@@ -122,12 +141,12 @@ class table():
             if self.pos < 0 and event == 4:
                 self.pos += self.grid.h / 4
                 # 超出的話
-                if self.pos < -self.grid.h * (len(self.data) - self.grid.row):
-                    self.pos = self.grid.h * (len(self.data) - self.grid.row)
+                if self.pos < buttom:
+                    self.pos = -buttom
             
             # 滑鼠往下滾
             # 表格在底部時，不能往上滑
-            if self.pos > -self.grid.h * (len(self.data) - self.grid.row) and event == 5:
+            if self.pos > buttom and event == 5:
                 self.pos -= self.grid.h / 4
                 # 超出的話
                 if self.pos > 0:
@@ -136,6 +155,7 @@ class table():
     def update(self):
         # 更新網格
         self.grid.update(self.p_grid.rect(self.rect))
+        self.t_grid.update(((0, 0), (self.col * self.grid.w, (len(self.data) - 1) * self.grid.h)))
         # 更新表格顯示區的大小
         self.t_screen = pygame.Surface(self.p_grid.rect(self.t_rect)[1])
         

@@ -1,6 +1,7 @@
 import pygame
 from pygame import draw
 from something import *
+from database import *
 
 # # 從文件中讀取課程數據列表
 # def load_course_data(filename):
@@ -26,7 +27,8 @@ font = pygame.font.SysFont("font.ttf", 24)
 # 數據 - 用於繪製圓餅圖
 data = [30, 20, 25, 25]  # 例如，這裡表示四個部分，佔比分別為 30%，20%，25%，25%
 
-t_data = [[1, 2, 3, 4], 2, 3, 4, 5, 6]
+t_data = [['課號', '類別', '課名', '學分']]
+t_data.extend(fetch_data('code, category, name, credit', 'math'))
 table2 = table(t_data, GRAY, grid1, ((13, 1), (6, 4)))
 table3 = table(t_data, GRAY, grid1, ((8, 6), (11, 5)))
 table4 = table(t_data, GRAY, grid1, ((1, 1), (6, 10)))
