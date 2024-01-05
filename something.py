@@ -86,7 +86,7 @@ class table():
         self.t_grid = grid(((0, 0), (self.col * self.grid.w, (len(self.data) - 1) * self.grid.h)), 
                            self.col, (len(self.data) - 1))
         self.pos = 0
-        self.font = pygame.font.SysFont("font.ttf", 24)
+        self.font = pygame.font.Font("font.ttf", round(self.t_grid.w / 10))
 
     def draw(self, screen):
         '''畫表格'''
@@ -111,10 +111,15 @@ class table():
                       (self.grid.w * self.grid.col, self.grid.h * i + self.pos))
             for j in range(len(self.data[i])):
                 # 畫文字
-                text = self.font.render(self.data[i][j], True, BLACK)
+                if type(self.data[i][j]) == int or type(self.data[i][j]) == float :
+                    d = str(self.data[i][j])
+                else:
+                    d = self.data[i][j]
+                text = self.font.render(d, True, BLACK)
                 text_rect = text.get_rect()
                 text_rect.center = (self.t_grid.grid[j][i - 1][0] + self.t_grid.w / 2, 
                                     self.t_grid.grid[j][i - 1][1] + self.t_grid.h / 2 + self.pos)
+                #print(d)
                 self.t_screen.blit(text, text_rect)
         # 畫首列的分隔線
         draw.line(self.t_screen, self.colorset[1], 
@@ -158,5 +163,7 @@ class table():
         self.t_grid.update(((0, 0), (self.col * self.grid.w, (len(self.data) - 1) * self.grid.h)))
         # 更新表格顯示區的大小
         self.t_screen = pygame.Surface(self.p_grid.rect(self.t_rect)[1])
+        # 更新字體
+        self.font = pygame.font.Font("font.ttf", round(self.t_grid.w / 10))
         
 

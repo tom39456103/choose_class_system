@@ -16,16 +16,6 @@ def create_table(name, vars):
     conn.commit()
     conn.close()
 
-create_table('math', 
-             "\
-                Code        INT PRIMARY KEY NOT NULL,\
-                Category    TEXT            NOT NULL,\
-                Name        TEXT            NOT NULL,\
-                Credit      REAL            NOT NULL,\
-                Campus      TEXT            NOT NULL,\
-                Instructor  TEXT            NOT NULL,\
-                Time        INT             NOT NULL")
-
 def insert_file(file, table):
     '''把 json 轉成 SQL'''
     # # read JSON
@@ -53,19 +43,18 @@ def insert_file(file, table):
     # save
     conn.commit()
     conn.close()
+    print("file inserted.")
 
-insert_file(class_spyder(), "math")
+# def fetch_data(cols, table):
+#     '''找資料，回傳序列'''
+#     conn = sqlite3.connect('CCSdatabase.db')
+#     cursor = conn.cursor()
 
-def fetch_data(cols, table):
-    '''找資料，回傳序列'''
-    conn = sqlite3.connect('CCSdatabase.db')
-    cursor = conn.cursor()
+#     cursor.execute("SELECT %s FROM %s" % (cols, table))
+#     rows = cursor.fetchall()
 
-    cursor.execute("SELECT %s FROM %s" % (cols, table))
-    rows = cursor.fetchall()
-
-    conn.close()
-    return rows
+#     conn.close()
+#     return rows
 
 def fetch_data(cols, table, cond):
     '''找資料，回傳序列'''
@@ -85,8 +74,20 @@ def drop_table(table):
     conn = sqlite3.connect('CCSdatabase.db')
     cursor = conn.cursor()
 
-    cursor.execute("DELETE FROM sqlite_sequence WHERE name = '%s'" % (table))
+    cursor.execute("DROP TABLE IF EXISTS %s" % (table))
     cursor.execute("VACUUM")
     
     conn.commit()
     conn.close()
+
+# drop_table('math')
+# create_table('math', 
+#              "\
+#                 Code        INT PRIMARY KEY NOT NULL,\
+#                 Category    TEXT            NOT NULL,\
+#                 Name        TEXT            NOT NULL,\
+#                 Credit      REAL            NOT NULL,\
+#                 Campus      TEXT            NOT NULL,\
+#                 Instructor  TEXT            NOT NULL,\
+#                 Time        INT             NOT NULL")
+# insert_file(class_spyder(), "math")
