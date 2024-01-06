@@ -27,9 +27,11 @@ font = pygame.font.SysFont("font.ttf", 24)
 # 數據 - 用於繪製圓餅圖
 data = [30, 20, 25, 25]  # 例如，這裡表示四個部分，佔比分別為 30%，20%，25%，25%
 
+# 從網路上下載課程資訊
 install_data("class_spyder()", "math", reinstall = False)
 t_data = [['課號', '類別', '課名', '學分']]
 t_data.extend(fetch_data('math', 'code, category, name, credit', ''))
+# 目前先用同一組資料
 table2 = table(t_data, GRAY, grid1, ((13, 1), (6, 4)))
 table3 = table(t_data, GRAY, grid1, ((8, 6), (11, 5)))
 table4 = table(t_data, GRAY, grid1, ((1, 1), (6, 10)))
